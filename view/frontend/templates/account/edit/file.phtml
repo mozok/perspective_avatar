@@ -1,0 +1,140 @@
+<?php
+/**
+ * @var $block Perspective\CustomerAvatar\Block\Account\Edit
+ */
+$attributeCode = $block->getAttributeCode();
+$imageUrl = $block->getImageUrl();
+$isGenerated = $block->isGenerated($imageUrl);
+?>
+<div data-bind="scope: 'customer-photo'" id="image-input" class="field choice" style="padding-bottom: 1%;">
+    <div class="control" id="filed_<?= $attributeCode ?>">
+        <div class="file-uploader-preview" data-bind="visible: isPreviewVisible">
+            <div class="customer-image">
+                <?php if($imageUrl) : ?>
+                    <img src="<?= $imageUrl ?>"
+                         alt="<?= __('Photo') ?>" width="150" height="150"
+                         data-bind="attr: {src: image }"/>
+                <?php endif; ?>
+            </div>
+            <button type="button"
+                    class="action-remove"
+                    <?php if($block->isGenerated($imageUrl)) : ?>style="display: none"<?php endif; ?>
+                    data-bind="click: deleteImage, visible: isDeleteVisible" title="Delete image"></button>
+        </div>
+        <label for="tmp_<?= $attributeCode ?>" class="label-upload">
+            <?= __('Upload') ?>
+        </label>
+        <div style="display: none">
+            <input type="file"
+                   id="tmp_<?= $attributeCode ?>"
+                   data-bind="event: { change: upload($element.files[0], $element) }">
+            <input type="file"
+                   name="<?= $attributeCode ?>"
+                   id="input_<?= $attributeCode ?>"
+                   data-bind="attr: {type: type}">
+        </div>
+    </div>
+</div>
+<script>
+require([
+    'ko'
+], function(ko){
+    'use strict';
+
+    let temp = document.getElementById('tmp_<?= $attributeCode ?>');
+    let input = document.getElementById('input_<?= $attributeCode ?>');
+    let stash = '<?= $isGenerated ? $imageUrl : $block->getGeneratedImage() ?>';
+
+    let init =  function() {
+          let model = {
+              /** initialize **/
+              init: function() {
+                  this.reader = new FileReader();
+                  return this;
+              },
+
+              /**
+               * Image src
+               */
+              image: ko.observable('<?= $imageUrl ?>'),
+
+              /**
+               * Do no display delete button if image is generated
+               */
+              isDeleteVisible: ko.observable(<?= $block->isGenerated($imageUrl) ? 'false' : 'true' ?>),
+
+              /**
+               * Is image preview visible
+               */
+              isPreviewVisible: ko.observable(true),
+
+              /**
+               * Input type
+               */
+              type: ko.observable('file'),
+
+              /**
+               * Set as file input
+               */
+              setInput: function(files) {
+                  this.isPreviewVisible(true);
+                  this.isDeleteVisible(true);
+                  this.type('file');
+                  input.files = files;
+              },
+
+              /**
+               * Set delete image
+               */
+              deleteImage: function() {
+                  this.image(stash);
+                  this.isDeleteVisible(false);
+                  this.type('text');
+                  temp.value = '';
+                  input.value = 'delete';
+              },
+
+              /**
+               * Image preview
+               *
+               * @param file
+               * @param element
+               */
+              upload: function(file, element) {
+                  if (file && file.type.match(/image.*/)) {
+                      let self = this;
+                      self.reader.onload = function() {
+                          self.image(self.reader.result);
+                      };
+                      self.reader.readAsDataURL(file);
+                      self.setInput(element.files);
+                  }else {
+                      element.value = '';
+                  }
+              }
+          };
+          ko.applyBindings(model.init(), document.getElementById('filed_<?= $attributeCode ?>'));
+    };
+    init();
+});
+</script>
+<style>
+    #image-input .label-upload {
+        box-shadow: inset 0 1px 0 0 #ffffff, inset 0 -1px 0 0 rgba(204, 204, 204, 0.3);
+        border-radius: 3px;
+        background-image: none;
+        background: #eeeeee;
+        border: 1px solid #cccccc;
+        color: #333333;
+        cursor: pointer;
+        display: inline-block;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 600;
+        margin: 0;
+        padding: 7px 15px;
+        font-size: 1.4rem;
+        line-height: 1.6rem;
+        box-sizing: border-box;
+        vertical-align: middle;
+    }
+</style>

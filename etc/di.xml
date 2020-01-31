@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Perspective\CustomerAvatar\Api\ImageGeneratorInterface"
+                type="Perspective\CustomerAvatar\Model\Image\Generate"/>
+    <preference for="Perspective\CustomerAvatar\Api\AvatarManagerInterface"
+                type="Perspective\CustomerAvatar\Model\AvatarManager"/>
+    <type name="Magento\Customer\CustomerData\Customer">
+        <plugin name="customerSectionData"
+                type="Perspective\CustomerAvatar\Plugin\SectionData\AvatarUrl"/>
+    </type>
+</config>

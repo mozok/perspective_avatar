@@ -1,0 +1,12 @@
+<?php
+/**
+ * @var $block Perspective\CustomerAvatar\Block\Account\Edit
+ */
+
+$imageUrl = $block->getImageUrl();
+?>
+<div class="customer-image">
+    <?php if($imageUrl) : ?>
+        <img src="<?= $imageUrl; ?>" alt="<?= '$block->getImageAlt()' ?>"/>
+    <?php endif; ?>
+</div>

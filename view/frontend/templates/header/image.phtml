@@ -1,0 +1,32 @@
+<?php
+/**
+ * @var $block Perspective\CustomerAvatar\Block\Header\Header
+ */
+$welcomeMessage = $block->getWelcome();
+?>
+<li class="greet welcome" data-bind="scope: 'customer'">
+    <!-- ko if: customer().fullname  -->
+    <span class="logged-in">
+        <img data-bind="attr: {src: customer().avatar_url, alt: customer().fullname }, visible: imgVisible()"
+             width="35" height="35" style="border-radius: 50%; display: none">
+    </span>
+    <!-- /ko -->
+    <!-- ko ifnot: customer().fullname  -->
+    <span class="not-logged-in"
+          data-bind='html:"<?= $block->escapeHtml($welcomeMessage) ?>"'></span>
+    <?= $block->getBlockHtml('header.additional') ?>
+    <!-- /ko -->
+</li>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "customer": {
+                        "component": "Magento_Customer/js/view/customer"
+                    }
+                }
+            }
+        }
+    }
+</script>
