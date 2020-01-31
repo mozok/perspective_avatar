@@ -10,4 +10,8 @@
         <plugin name="customerSectionData"
                 type="Perspective\CustomerAvatar\Plugin\SectionData\AvatarUrl"/>
     </type>
+    <type name="Magento\Customer\Model\Customer">
+        <plugin name="customerDeleteAfter"
+                type="Perspective\CustomerAvatar\Plugin\Customer\DeleteAfter"/>
+    </type>
 </config>
