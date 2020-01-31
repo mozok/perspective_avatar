@@ -285,7 +285,7 @@ class Generate implements ImageGeneratorInterface
     {
         $this->checkDirectory();
 
-        $name = 'image_g'.self::IMAGE_FORMAT;
+        $name = 'image_g_'.uniqid().self::IMAGE_FORMAT;
 
         $mediaPath = $this->getMediaPath(self::FULL_MEDIA_DIRECTORY.$name);
 
