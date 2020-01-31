@@ -17,7 +17,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "Magento\\Customer\\": ""
+      "Perspective\\CustomerAvatar\\": ""
     }
   },
   "version": "1.0.1"
