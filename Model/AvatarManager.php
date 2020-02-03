@@ -29,6 +29,11 @@ class AvatarManager implements AvatarManagerInterface
     protected $_customer;
 
     /**
+     * @var null|Customer
+     */
+    protected $_loadedCustomer = null;
+
+    /**
      * @var ImageGeneratorInterface
      */
     protected $_imageGenerator;
@@ -76,13 +81,8 @@ class AvatarManager implements AvatarManagerInterface
      */
     public function getAvatarUrl(CustomerDataModel $customer) : string
     {
-        $attribute = $customer->getCustomAttribute(self::ATTRIBUTE_CODE);
-        if($attribute && $attribute->getValue()) {
-            $attrValue = $attribute->getValue();
-        }else {
-            return $this->getGeneratedImage($customer);
-        }
-        return $this->getMediaUrl().Customer::ENTITY.$attrValue;
+        $attribute = $this->getCustomer($customer->getId())->getData(self::ATTRIBUTE_CODE);
+        return $attribute ? $this->getMediaUrl().Customer::ENTITY.$attribute : $this->getGeneratedImage($customer);
     }
 
     /**
@@ -93,10 +93,10 @@ class AvatarManager implements AvatarManagerInterface
      */
     public function getGeneratedImage(CustomerDataModel $customer) : string
     {
-        $generatedAttribute = $customer->getCustomAttribute(self::ATTRIBUTE_CODE_GENERATED);
+        $generatedAttribute = $this->getCustomer($customer->getId())->getData(self::ATTRIBUTE_CODE_GENERATED);
         $attrValue = $this->validateAttribute(
             $customer,
-            $generatedAttribute ? $generatedAttribute->getValue() : null
+            $generatedAttribute ?? null
         );
         return $this->getMediaUrl().Customer::ENTITY.$attrValue;
     }
@@ -308,7 +308,10 @@ class AvatarManager implements AvatarManagerInterface
      */
     public function getCustomer($id) : Customer
     {
-        return $this->_customer->load($id);
+        if($this->_loadedCustomer === null) {
+            $this->_loadedCustomer = $this->_customer->load($id);
+        }
+        return $this->_loadedCustomer;
     }
 
     /**

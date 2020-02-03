@@ -6,4 +6,8 @@
         <plugin name="customerImageData"
                 type="Perspective\CustomerAvatar\Plugin\Admin\Form\DataProvider"/>
     </type>
+    <type name="Magento\Customer\Model\Metadata\CachedMetadata">
+        <plugin name="imageNameIssue"
+                type="Perspective\CustomerAvatar\Plugin\Admin\ImageName"/>
+    </type>
 </config>

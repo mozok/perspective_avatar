@@ -7,7 +7,7 @@ $welcomeMessage = $block->getWelcome();
 <li class="greet welcome" data-bind="scope: 'customer'">
     <!-- ko if: customer().fullname  -->
     <span class="logged-in">
-        <img data-bind="attr: {src: customer().avatar_url, alt: customer().fullname }, visible: imgVisible()"
+        <img data-bind="attr: {src: image, alt: customer().fullname }, visible: imgVisible()"
              width="35" height="35" style="border-radius: 50%; display: none">
     </span>
     <!-- /ko -->
