@@ -131,9 +131,7 @@ class Generate implements ImageGeneratorInterface
      */
     public function cutEntityType(Customer $customer, string &$path) : void
     {
-        /** @var CustomerAttribute $attribute */
-        $attribute = $customer->getAttribute(AvatarManagerInterface::ATTRIBUTE_CODE);
-        $code = $attribute->getEntityType()->getEntityTypeCode();
+        $code = $customer->getEntityType()->getEntityTypeCode();
         $result = str_replace($code, '', $path);
         $path = is_string($result) ? $result : '';
     }
