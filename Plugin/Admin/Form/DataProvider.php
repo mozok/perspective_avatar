@@ -21,7 +21,7 @@ class DataProvider
         foreach ($data as $customerId => $customerData) {
             if(@$customerData['customer']) {
                 $accountInfo = $customerData['customer'];
-                if(!$accountInfo[AvatarManagerInterface::ATTRIBUTE_CODE]) {
+                if(!@$accountInfo[AvatarManagerInterface::ATTRIBUTE_CODE]) {
                     $generated = $accountInfo[AvatarManagerInterface::ATTRIBUTE_CODE_GENERATED];
                     $data[$customerId]['customer'][AvatarManagerInterface::ATTRIBUTE_CODE] = $generated;
                 }
