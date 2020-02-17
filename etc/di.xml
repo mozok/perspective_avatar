@@ -14,4 +14,13 @@
         <plugin name="customerDeleteAfter"
                 type="Perspective\CustomerAvatar\Plugin\Customer\DeleteAfter"/>
     </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="GenerateAvatarForCustomers" xsi:type="object">
+                    Perspective\CustomerAvatar\Console\Command\BuildImages
+                </item>
+            </argument>
+        </arguments>
+    </type>
 </config>
