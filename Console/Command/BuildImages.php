@@ -108,10 +108,10 @@ class BuildImages extends Command
             }
         }
         $size = $collection->getSize();
-        $output->writeln(
-            '<comment>Finished with: generated: '
-            .$generated.' errors: '.$errors.' validated customers: '.$size.'</comment>'
-        );
+        $output->writeln('<info>Generation has been finished.</info>');
+        $output->writeln('<comment>Generated images: '.$generated.'.</comment>');
+        $output->writeln('<comment>Errors: '.$errors.'.</comment>');
+        $output->writeln('<comment>Validated customers: '.$size.'.</comment>');
     }
 
     /**
