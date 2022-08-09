@@ -1,6 +1,6 @@
 {
-  "name": "perspective_studio/customer_avatar",
-  "description": "N/A",
+  "name": "perspective-studio/customer_avatar",
+  "description": "Add image avatar to the Customer",
   "config": {
     "sort-packages": true
   },
